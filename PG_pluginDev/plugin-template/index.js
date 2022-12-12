@@ -4,15 +4,35 @@ var jsPluginName = (function (jspsych) {
   const info = {                                                                                      //static object with name and parameters property
     name: "PuzzleGame",
     parameters: {
-      parameter_name: {                                                                               //substitute with whatever your want, e.g., name = image_duration
-        type: jspsych.ParameterType.INT,                                                              //and then default 500 for 500ms
-        default: undefined,                                                                           //if the default value is undefined then a user must specify a 
-      },                                                                                              //val for this  when creating a trial using the plugin on timeline
-
-      parameter_name2: {
-        type: jspsych.ParameterType.IMAGE,
+      /** The path of the trial */
+      url: {
+        type: jspsych.ParameterType.STRING,
+        pretty_name: "URL",
         default: undefined,
       },
+
+    /* Image URL */
+      imgurl: {
+        type: jspsych.ParameterType.STRING,
+        pretty_name: "Image URL",
+        default: undefined,
+      },
+
+      /** The button to continue to the next page get by ID. */
+      cont_btn: {
+          type: jspsych.ParameterType.STRING,
+          pretty_name: "Continue button",
+          default: null,
+      },
+
+      /** Function to check whether user is allowed to continue after clicking cont_key or clicking cont_btn */
+      check_fn: {
+          type: jspsych.ParameterType.FUNCTION,
+          pretty_name: "Check function",
+          default: () => true,
+      },
+
+
     },
   };
 
@@ -21,7 +41,8 @@ var jsPluginName = (function (jspsych) {
   /**
    * **PuzzleGame**
    *
-   * this plugin takes an image and slices it into 12 pieces which the participant then can put together to solve the puzzle
+   * This plugin adpated some parts of it's code from Erik Weitnauer's external html plugin but adds a puzzle game 
+   * functionality.
    *
    * @author Ilaria Siriner
    * @see {@link https://DOCUMENTATION_URL DOCUMENTATION LINK TEXT}
