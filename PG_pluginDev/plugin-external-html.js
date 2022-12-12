@@ -63,7 +63,7 @@ var jsPsychExternalHtml = (function (jspsych) {
           if (trial.force_refresh) {
               url = trial.url + "?t=" + performance.now();
           }
-          fetch(url)
+          fetch(url)                                                                
               .then((response) => {
               return response.text();
           })
