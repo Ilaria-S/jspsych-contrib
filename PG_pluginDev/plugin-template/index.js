@@ -66,61 +66,39 @@ var jsPluginName = (function (jspsych) {
         .then((response) => {                                                                       //this promise gets resolved using the callback function then with a response object
           return response.text();                                                                   //the response object then gets turned into text (https://gomakethings.com/getting-html-with-fetch-in-vanilla-js/) and is used as an input for the next promise (promise chaining)
         })
-        .then((html) => {
-          display_element.innerHTML = html;
-          on_load();
-          var t0 = performance.now();
-          const key_listener = (e) => {
-            if (this.jsPsych.pluginAPI.compareKeys(e.key, trial.cont_key)) {
-              finish();
-            }
-          };
-          const finish = () => {
-            if (trial.check_fn && !trial.check_fn(display_element)) {
+        .then((html) => {                                                                           //the string now gets turned into an html element
+          display_element.innerHTML = html;                                                         //this html element is now the inner html of the new webpage
+          on_load();                                                                                //"The on_load callback can be added to any trial. The callback will trigger once the trial has completed loading. For most plugins, this will occur once the display has been initially updated but before any user interactions or timed events (e.g., animations) have occurred."
+          var t0 = performance.now();                                                               //"Indicates which method of recording time to use. The 'performance' method uses calls to performance.now(), which is the standard way of measuring timing in jsPsych" and sets it to t0
+
+          const finish = () => {                                                                    //an anonymous arrow function gets set to the constant finish and only finishes the trial when the check function returns true
+            if (trial.check_fn && !trial.check_fn(display_element)) {                               //by default, the check_fn parameter is set to an arrow function that returns true
               return;
             }
-            if (trial.cont_key) {
-              display_element.removeEventListener("keydown", key_listener);
-            }
-            var trial_data = {
-              rt: Math.round(performance.now() - t0),
+            var trial_data = {                                                                      //this stores reaction time and the url and later this variable gets passed to the finish trial function
+              rt: Math.round(performance.now() - t0),                                               //here, I could also track in which ways the tiles were moved
               url: trial.url,
             };
-            display_element.innerHTML = "";
-            this.jsPsych.finishTrial(trial_data);
+            display_element.innerHTML = "";                                                         //empty the inner HTML so that the screen gets cleared after each trial
+            this.jsPsych.finishTrial(trial_data);                                                   //the trial data object gets passed to the finishTrial function and finishComplete() gets called
             trial_complete();
           };
-          // by default, scripts on the external page are not executed with XMLHttpRequest().
-          // To activate their content through DOM manipulation, we need to relocate all script tags
-          if (trial.execute_script) {
-            // changed for..of getElementsByTagName("script") here to for i loop due to TS error:
-            // Type 'HTMLCollectionOf<HTMLScriptElement>' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
-            var all_scripts = display_element.getElementsByTagName("script");
-            for (var i = 0; i < all_scripts.length; i++) {
-              const relocatedScript = document.createElement("script");
-              const curr_script = all_scripts[i];
-              relocatedScript.text = curr_script.text;
-              curr_script.parentNode.replaceChild(relocatedScript, curr_script);
-            }
-          }
+
           if (trial.cont_btn) {
-            display_element.querySelector("#" + trial.cont_btn).addEventListener("click", finish);
-          }
-          if (trial.cont_key) {
-            display_element.addEventListener("keydown", key_listener);
+            display_element.querySelector("#" + trial.cont_btn).addEventListener("click", finish);  //if the continue button clicked (accessed through id (#)), the finish function is called
           }
         })
-        
-        .catch((err) => {
+
+        .catch((err) => {                                                                           //if the gets rejected, throw an error
           console.error(`Something went wrong with fetch() in plugin-external-html.`, err);
         });
 
-      var data = {
-        parameter_name: "parameter value",
-      };
-      // end trial
-      this.jsPsych.finishTrial(data);                                                                  //pass an object of data as the parameter to the finishTrial
+      return new Promise((resolve) => {                                                             //no matter what, the promises status gets set to resolved and the resolve function is assigned to the variable trial complete (see line 61)
+        trial_complete = resolve;
+      });
     }
+
+
 
   }
   PuzzleGame.info = info;
