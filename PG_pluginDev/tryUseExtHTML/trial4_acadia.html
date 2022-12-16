@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <meta name    = "viewport" content = "width=device-width, initial-scale=1.0">                      <!--area of the window in which web content can be seen gets dynamically scaled to device width-->
+        <title>Trial 4</title>    
+    </head>
+
+    <body>
+        <br>
+        <div class = "trayS" id = "t4"></div>                                                                       <!--tray is the place where we have all the puzzle pieces in a random order in the beginning-->
+        <br>
+        <div class = "board" id = "b4"></div>                                                                      <!--board is the place where the puzzle pieces need to be put-->
+        <br>
+        <a      href  = "./trial5_toronto.html">
+        <button class = "startExp2" id = "np_t4">Next puzzle</button>
+        </a>
+        <input  type = "button" onclick = "new_popup()" value = "Need help?" class = "helpBtn">                 <!--you need to open the link using JS to be able to close it using JS-->
+        <!-- <script type = "text/javascript">
+            function new_popup(){
+                var popupwin = window.open('./help/help_T4acadia.html', 'anyname');
+                setTimeout(function(){popupwin.close();}, 10000)                                    //closes the window after 10s
+            }
+
+            setTimeout(function() {                                                                 //disable skip puzzle for 30 seconds
+                document.getElementById("np_t4").disabled = false;
+            }, 30000);
+
+
+            var rows    = 3;  //I split the image into 4 wide and 3 high
+            var columns = 4;
+
+            var currTile;
+            var otherTile;
+
+
+            window.onload = function() {                                                                        //initialize the 5x5 board when the browser window is leaded
+                for (let r = 0; r < rows; r++) {                                                                //for each element in our board matrix, the html element image is created -> <img>
+                    for (let c = 0; c < columns; c++) {
+                        let tile     = document.createElement("img");
+                            tile.src = "./blank.jpg";          //and put a blank white image there
+
+                            //DRAG FUNCTIONALITY -> make all tiles dragabble                                        //the event listener adds multiple events to our tile element without overwriting each other
+                        tile.addEventListener("dragstart", dragStart);                                          //click on image to drag
+                        tile.addEventListener("dragover", dragOver);                                            //drag an image
+                        tile.addEventListener("dragenter", dragEnter);                                          //dragging an image into another one
+                        tile.addEventListener("dragleave", dragLeave);                                          //dragging an image away from another one
+                        tile.addEventListener("drop", dragDrop);                                                //drop an image onto another one
+                        tile.addEventListener("dragend", dragEnd);                                              //after you completed dragDrop
+
+                        document.getElementById("b4").append(tile);
+                    }
+                }
+
+                //tray
+                let tray = [];
+                for (let i = 1; i <= rows*columns; i++) {                                                       //because I called the images "1.jpg" etc., this will create an array with numbers 1 to 12 as strings
+                    tray.push(i.toString());                                                                    //put "1" to "12" into the array (puzzle images names)
+                }
+
+                for (let i =0; i < tray.length; i++) {                                                          //randomize pieces order by returning a random number from 1 to 12
+                    let j = Math.floor(Math.random() * tray.length);
+
+                    //swap
+                    let  tmp = tray[i];
+                    tray[i]  = tray[j];
+                    tray[j]  = tmp;
+                }
+                tray.reverse();
+                for (let i = 0; i < tray.length; i++) {                                                         //initializing the tray with the random ordered images, add same functionality as with the board
+                    let tile     = document.createElement("img");
+                        tile.src = "../images/acadia/" + tray[i] + ".jpg";
+
+                    //DRAG FUNCTIONALITY
+                    tile.addEventListener("dragstart", dragStart);                                              
+                    tile.addEventListener("dragover", (dragOver));                                                
+                    tile.addEventListener("dragenter", dragEnter);                                              
+                    tile.addEventListener("dragleave", dragLeave);                                              
+                    tile.addEventListener("drop", dragDrop);                                                    
+                    tile.addEventListener("dragend", dragEnd);                                                  
+
+                    document.getElementById("t4").append(tile);
+                }
+            }
+
+            //DRAG TILES
+            function dragStart() {
+                currTile = this;  //this refers to image that was clicked on for dragging
+            }                                                                                                   //becuae dragstart gives us a reference for the element the user dragged
+
+            function dragOver(e) {
+                e.preventDefault();                                                                             //enables all tiles to receive drop events too
+            }
+
+            function dragEnter(e) {                                                                             //this prevents navigating to that link
+                e.preventDefault();
+            }
+
+            function dragLeave() {                                                                              //this leaves the tile where we left it
+
+            }
+
+            function dragDrop() {
+                otherTile = this;  //this refers to image that is being dropped on
+            }
+
+            function dragEnd() {                                                                                //this swaps the selected image with the one that it was dropped on
+                if (currTile.src.includes("blank")) {
+                    return;
+                }
+                let currImg       = currTile.src;
+                let otherImg      = otherTile.src;
+                    currTile.src  = otherImg;
+                    otherTile.src = currImg;
+
+            }
+
+        </script> -->
+    </body>
+</html>
