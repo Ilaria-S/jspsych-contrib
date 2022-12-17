@@ -2,34 +2,34 @@ var jsPluginName = (function (jspsych) {
   "use strict";
 
   const info = {                                                                                    //static object with name and parameters property
-    name      : "PuzzleGame",
+    name: "PuzzleGame",
     parameters: {
       /** The path of the trial */
       url: {
-        type       : jspsych.ParameterType.STRING,
+        type: jspsych.ParameterType.STRING,
         pretty_name: "URL",
-        default    : undefined,
+        default: undefined,
       },
 
       /* Image URL */
       imgurl: {
-        type       : jspsych.ParameterType.STRING,
+        type: jspsych.ParameterType.STRING,
         pretty_name: "Image URL",
-        default    : undefined,
+        default: undefined,
       },
 
       /** The button to continue to the next page get by ID. */
       cont_btn: {
-        type       : jspsych.ParameterType.STRING,
+        type: jspsych.ParameterType.STRING,
         pretty_name: "Continue button",
-        default    : null,
+        default: null,
       },
 
       /** Function to check whether user is allowed to continue after clicking cont_key or clicking cont_btn */
       check_fn: {
-        type       : jspsych.ParameterType.FUNCTION,
+        type: jspsych.ParameterType.FUNCTION,
         pretty_name: "Check function",
-        default    : () => true,
+        default: () => true,
       },
 
 
@@ -76,7 +76,7 @@ var jsPluginName = (function (jspsych) {
               return;
             }
             var trial_data = {                                                                      //this stores reaction time and the url and later this variable gets passed to the finish trial function
-              rt : Math.round(performance.now() - t0),   //here, I could also track in which ways the tiles were moved
+              rt: Math.round(performance.now() - t0),   //here, I could also track in which ways the tiles were moved
               url: trial.url,
             };
             display_element.innerHTML = "";  //empty the inner HTML so that the screen gets cleared after each trial
@@ -96,6 +96,36 @@ var jsPluginName = (function (jspsych) {
       return new Promise((resolve) => {                                                             //no matter what, the promises status gets set to resolved and the resolve function is assigned to the variable trial complete (see line 61)
         trial_complete = resolve;
       });
+
+
+      /*Start of the puzzle game code*/
+      function setup_puzzle() {
+        var rows = 3;  //I split the image into 4 wide and 3 high
+        var columns = 4;
+
+        var currTile;
+        var otherTile;
+
+        window.onload = function () {                                                                        //initialize the 5x5 board when the browser window is leaded
+          for (let r = 0; r < rows; r++) {                                                                //for each element in our board matrix, the html element image is created -> <img>
+            for (let c = 0; c < columns; c++) {
+              let tile = document.createElement("img");
+              tile.src = "./blank.jpg";                  //and put a blank white image there
+
+              //DRAG FUNCTIONALITY -> make all tiles dragabble                                    //the event listener adds multiple events to our tile element without overwriting each other
+              tile.addEventListener("dragstart", dragStart);                                          //click on image to drag
+              tile.addEventListener("dragover", dragOver);                                            //drag an image
+              tile.addEventListener("dragenter", dragEnter);                                          //dragging an image into another one
+              tile.addEventListener("dragleave", dragLeave);                                          //dragging an image away from another one
+              tile.addEventListener("drop", dragDrop);                                                //drop an image onto another one
+              tile.addEventListener("dragend", dragEnd);                                              //after you completed dragDrop
+
+              document.getElementById("b4").append(tile);
+            };
+          };
+        };
+      };
+
     }
 
 
