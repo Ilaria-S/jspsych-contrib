@@ -7,7 +7,7 @@ var jsPuzzleGame = (function (jspsych) {
       imagepath: {                                                                                  //substitute with whatever your want, e.g., name = image_duration
         type: jspsych.ParameterType.STRING,                                                         //and then default 500 for 500ms
         default: undefined,                                                                         //if the default value is undefined then a user must specify a 
-      },                                                                                      
+      },
     },
   };
 
@@ -39,15 +39,15 @@ var jsPuzzleGame = (function (jspsych) {
 
       /*declare all neccessary variables*/
       var start_time = performance.now();                                                           //this variable is later used to calculate the rt
-      var new_html = '<div class = "trayS" id = "t4">' +  '</div>' + '<div class = "board" id = "b4">' + '</div>' + '<button class = "startExp2" id = "np_t4">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
-      
-      var rows    = 3;  //I split the image into 4 wide and 3 high
+      var new_html = '<div class = "trayS" id = "t4">' + '</div>' + '<div class = "board" id = "b4">' + '</div>' + '<button class = "startExp2" id = "np_t4">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
+
+      var rows = 3;  //I split the image into 4 wide and 3 high
       var columns = 4;
       var currTile;
       var otherTile;
 
 
-      function build_html() {                                                                        
+      function build_html() {
         display_element.innerHTML = new_html;                                                       //set up the basic structure for the trial
 
         display_element                                                                             //add an event listener to the element with the class name startExp2
@@ -55,42 +55,51 @@ var jsPuzzleGame = (function (jspsych) {
           .addEventListener("click", () => {                                                        //if that button is clicked, it calles the endtrial function
             end_trial();
           }
-        );
+          );
 
         display_element
           .querySelector(".helpBtn")
-          .addEventListener("click", () =>{
+          .addEventListener("click", () => {
             new_popup();
           },
-        );
+          );
       }
 
       const end_trial = () => {
         this.jsPsych.pluginAPI.clearAllTimeouts();                                                  // kill any remaining setTimeout handlers
-        
+
         // gather the data to store for the trial
         var end_time = performance.now();                                                           //grab current time to calculate total puzzle time below
         var rt = Math.round(end_time - start_time);                                                 //calculate reaction time
         var data = {                                                                                //store more data; more characteristics to add later but this is good for now
-            reactionTime: rt,
-            image_used: trial.imagepath,
+          reactionTime: rt,
+          image_used: trial.imagepath,
         };
-        
+
         display_element.innerHTML = "";                                                             // clear the display (kinda how you need to clear the screen in matlab after a trial)
-        
+
         this.jsPsych.finishTrial(data);                                                             // move on to the next trial by passing an object of data as the parameter to the finishTrial
       };
 
       const new_popup = () => {
         var popupwin = window.open('./acadia/acadia_help.jpg', 'anyname');
-        setTimeout(function(){popupwin.close();}, 10000)                                    //closes the window after 10s
+        setTimeout(function () { popupwin.close(); }, 10000)                                         //closes the window after 10s
       };
 
       function load_img() {
-        for (let r = 0; r < rows; r++) {                                                                //for each element in our board matrix, the html element image is created -> <img>
+        for (let r = 0; r < rows; r++) {                                                            //for each element in our board matrix, the html element image is created -> <img>
           for (let c = 0; c < columns; c++) {
             let tile = document.createElement("img");
-            tile.src = "./blank.jpg";          //and put a blank white image there              
+            tile.src = "./blank.jpg";          //and put a blank white image there  
+
+            //DRAG FUNCTIONALITY -> make all tiles dragabble                                        //the event listener adds multiple events to our tile element without overwriting each other
+            tile.addEventListener("dragstart", dragStart);                                          //click on image to drag
+            tile.addEventListener("dragover", dragOver);                                            //drag an image
+            tile.addEventListener("dragenter", dragEnter);                                          //dragging an image into another one
+            tile.addEventListener("dragleave", dragLeave);                                          //dragging an image away from another one
+            tile.addEventListener("drop", dragDrop);                                                //drop an image onto another one
+            tile.addEventListener("dragend", dragEnd);                                              //after you completed dragDrop
+
             document.getElementById("b4").append(tile);
           }
         }
@@ -112,8 +121,46 @@ var jsPuzzleGame = (function (jspsych) {
           let tile = document.createElement("img");
           tile.src = "./acadia/" + tray[i] + ".jpg";
 
+          //DRAG FUNCTIONALITY
+          tile.addEventListener("dragstart", dragStart);
+          tile.addEventListener("dragover", (dragOver));
+          tile.addEventListener("dragenter", dragEnter);
+          tile.addEventListener("dragleave", dragLeave);
+          tile.addEventListener("drop", dragDrop);
+          tile.addEventListener("dragend", dragEnd);
+
           document.getElementById("t4").append(tile);
         }
+      }
+
+      //DRAG TILES
+      function dragStart() {
+        currTile = this;  //this refers to image that was clicked on for dragging
+      }                                                                                                   //becuae dragstart gives us a reference for the element the user dragged
+
+      function dragOver(e) {
+        e.preventDefault();                                                                             //enables all tiles to receive drop events too
+      }
+
+      function dragEnter(e) {                                                                             //this prevents navigating to that link
+        e.preventDefault();
+      }
+
+      function dragLeave() {                                                                              //this leaves the tile where we left it
+      }
+
+      function dragDrop() {
+        otherTile = this;  //this refers to image that is being dropped on
+      }
+
+      function dragEnd() {                                                                                //this swaps the selected image with the one that it was dropped on
+        if (currTile.src.includes("blank")) {
+          return;
+        }
+        let currImg = currTile.src;
+        let otherImg = otherTile.src;
+        currTile.src = otherImg;
+        otherTile.src = currImg;
       }
 
 
