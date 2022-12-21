@@ -82,7 +82,7 @@ var jsPuzzleGame = (function (jspsych) {
       };
 
       const new_popup = () => {
-        var popupwin = window.open('./acadia/acadia_help.jpg', 'anyname');
+        var popupwin = window.open('./acadia/acadia.png', 'anyname');
         setTimeout(function () { popupwin.close(); }, 10000)                                         //closes the window after 10s
       };
 
@@ -119,7 +119,7 @@ var jsPuzzleGame = (function (jspsych) {
         tray.reverse();
         for (let i = 0; i < tray.length; i++) {                                                         //initializing the tray with the random ordered images, add same functionality as with the board
           let tile = document.createElement("img");
-          tile.src = "./acadia/" + tray[i] + ".jpg";
+          tile.src = "./images/acadia/" + tray[i] + ".jpg";
 
           //DRAG FUNCTIONALITY
           tile.addEventListener("dragstart", dragStart);
