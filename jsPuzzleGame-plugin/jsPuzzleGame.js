@@ -8,6 +8,26 @@ var jsPuzzleGame = (function (jspsych) {
         type: jspsych.ParameterType.STRING,                                                         //and then default 500 for 500ms
         default: undefined,                                                                         //if the default value is undefined then a user must specify a 
       },
+
+      helppath: {
+        type: jspsych.ParameterType.STRING,
+        default: undefined,
+      },
+
+      boardID: {
+        type: jspsych.ParameterType.STRING,
+        default: undefined,
+      },
+
+      trayID: {
+        type: jspsych.ParameterType.STRING,
+        default: undefined,
+      },
+
+      trayClass: {
+        type: jspsych.ParameterType.STRING,
+        default: "tray",
+      },
     },
   };
 
@@ -38,8 +58,13 @@ var jsPuzzleGame = (function (jspsych) {
       //-> clear the innerHTML after the trial = ' '; you can set and remove timeouts, collect keyboard responses and add asynchronous loading 
 
       /*declare all neccessary variables*/
+      var path = trial.imagepath;
+      var help_path = trial.helppath;
+      var tray_class = trial.trayClass;
+      var tray_id = trial.trayID;
+      var board_id = trial.boardID;
       var start_time = performance.now();                                                           //this variable is later used to calculate the rt
-      var new_html = '<div class = "trayS" id = "t4">' + '</div>' + '<div class = "board" id = "b4">' + '</div>' + '<button class = "startExp2" id = "np_t4">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
+      var new_html = '<div class = ' + tray_class + ' id =' + tray_id + '>' + '</div>' + '<div class = "board" id = ' + board_id + '>' + '</div>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
 
       var rows = 3;  //I split the image into 4 wide and 3 high
       var columns = 4;
@@ -82,7 +107,7 @@ var jsPuzzleGame = (function (jspsych) {
       };
 
       const new_popup = () => {
-        var popupwin = window.open('./acadia/acadia.png', 'anyname');
+        var popupwin = window.open(help_path, 'anyname');
         setTimeout(function () { popupwin.close(); }, 10000)                                         //closes the window after 10s
       };
 
@@ -100,7 +125,7 @@ var jsPuzzleGame = (function (jspsych) {
             tile.addEventListener("drop", dragDrop);                                                //drop an image onto another one
             tile.addEventListener("dragend", dragEnd);                                              //after you completed dragDrop
 
-            document.getElementById("b4").append(tile);
+            document.getElementById(board_id).append(tile);
           }
         }
 
@@ -119,7 +144,7 @@ var jsPuzzleGame = (function (jspsych) {
         tray.reverse();
         for (let i = 0; i < tray.length; i++) {                                                         //initializing the tray with the random ordered images, add same functionality as with the board
           let tile = document.createElement("img");
-          tile.src = "./images/acadia/" + tray[i] + ".jpg";
+          tile.src = path + tray[i] + ".jpg";
 
           //DRAG FUNCTIONALITY
           tile.addEventListener("dragstart", dragStart);
@@ -129,7 +154,7 @@ var jsPuzzleGame = (function (jspsych) {
           tile.addEventListener("drop", dragDrop);
           tile.addEventListener("dragend", dragEnd);
 
-          document.getElementById("t4").append(tile);
+          document.getElementById(tray_id).append(tile);
         }
       }
 
