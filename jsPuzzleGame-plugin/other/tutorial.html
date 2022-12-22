@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+
+    <body>
+        <br>
+        <img src = "./Instructions/Instructions.gif" id = "instrGif">
+        <br>
+        <button class = "startExp2" disabled = "disabled" id="tutBtn">Click here to start the experiment</button>
+        
+        <script>                                                                                    //script has to be put after the button because otherwise it would try to get the button by id before it was rendered
+            setTimeout(function() {
+                document.getElementById("tutBtn").disabled = false;
+            }, 44000);                                                                               //tutorial is about a minute = 60000ms
+
+            
+        </script>
+
+
+    </body>
+</html>

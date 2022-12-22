@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+
+    <body>
+        <br>
+        <div id = "welcomeMess">
+            <h2 style = "font-size: 2.5em;" id = "welcHeader">Welcome to the experiment!</h2>
+            <br>
+            <p>The Cognitive and Decision Sciences Lab at Syracuse University invites you to participate in a research study. We are interested in learning about the application of webcam based eye-tracking. After watching a short tutorial, you will be asked to allow your browser to have access to your computer’s camera for the duration of the experiment. Please watch the full tutorial, you will not be able to proceed with the experiment until you have watched the tutorial once.  You will then be asked to follow instructions to help the eye-tracker learn where you are looking. This is called the calibration process. If possible, please wear minimal or no eye makeup to the study. If you need eyesight correction, contact lenses are preferred over glasses, if you choose to wear glasses, please clean them before the study begins. It also might be helpful to put up long hair and bangs in order to provide the eye tracker a clear view of the eyes. After the calibration process, you will do three 12-piece puzzles using your mouse to drag and drop the pieces. You have unlimited turns. If you have a hard time solving the puzzle, click the help button at the bottom of the page to see the full picture in a new tab. The help window will close automatically after 10 seconds but you can close it earlier just as you would close a normal browser tab. You can click the help button as many times as you need to. If you are done solving the puzzle click on "next puzzle" at the bottom of the page. You will not be able to proceed without having solved the puzzle. As a last step, we will ask you some questions on your experience with this study. Completing the study will take about 15 minutes of your time.</p>
+            <p>Involvement in the study is voluntary. This means you can choose whether to participate and that you may withdraw from the study at any time without penalty.</p>
+            <p>If you have any questions, concerns or complaints about the research please contact Dr. Schooler, who directs the The Cognitive and Decision Sciences Lab is led by Dr. Lael Schooler,  at lschoole@syr.edu.</p>
+            <p>Whenever one works with email or the internet, there is always the risk of compromising privacy, confidentiality, and/or anonymity. Your confidentiality will be maintained to the degree permitted by the technology being used. It is important for you to understand that no guarantees can be made regarding the interception of data sent via the internet by third parties.</p>
+            <br>
+            <form method="get" action="./tutorial.html" style = "font-size: 1.3em;">                                <!--when we got the server change method to post-->
+                <input type="radio" class="radioIC" name="infCons" value="yes" id="infCons" required/>
+                <label for="infCons" required>I am 18 years of age or older, and by continuing I agree to participate in this research study.</label>
+                <br>
+                <br>
+                    <button id = "startExp" type = "submit">Click here to see the tutorial</button>
+            </form>
+        </div>
+    </body>
+</html>
