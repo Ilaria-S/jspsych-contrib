@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">                      <!--area of the window in which web content can be seen gets dynamically scaled to device width-->
+        <title>Post-Study questionnaire</title>
+        <link rel="stylesheet" href="./puzzle.css">
+    </head>
+
+    <body>
+        <br>
+        <p>Thank you very much for participating in our experiment. We would like to ask you a few questions to improve this experiment in the future. </p>
+        <p>Please tick the relevant box to indicate how you respond to each statement.</p>
+        <br>
+        <br>
+        <br>
+            <form action="./thanks.html" method="get" id = "postQForm">
+                <div>
+                    <p>The instructions at the beginning of the experiment were perfectly clear.</p>
+                    <input type="radio" name="instr" value="i1" id="i1" />
+                    <label for="i1">Strongly Disagree</label><br>
+                    <input type="radio" name="instr" value="i2" id="i2" />
+                    <label for="i2">Disagree</label><br>
+                    <input type="radio" name="instr" value="i3" id="i3" />
+                    <label for="i3">Neutral</label><br>
+                    <input type="radio" name="instr" value="i4" id="i4" />
+                    <label for="i4">Agree</label><br>
+                    <input type="radio" name="instr" value="i5" id="i5" />
+                    <label for="i5">Strongly Agree</label>
+                </div>
+                <br>
+                <div>
+                    <p>The tutorial and help button provided enough information to perform the puzzle task</p>
+                    <input type="radio" name="tutHel" value="th1" id="th1" />
+                    <label for="th1">Strongly Disagree</label><br>
+                    <input type="radio" name="tutHel" value="th2" id="th2" />
+                    <label for="th2">Disagree</label><br>
+                    <input type="radio" name="tutHel" value="th3" id="th3" />
+                    <label for="th3">Neutral</label><br>
+                    <input type="radio" name="tutHel" value="th4" id="th4" />
+                    <label for="th4">Agree</label><br>
+                    <input type="radio" name="tutHel" value="th5" id="th5" />
+                    <label for="th5">Strongly Agree</label>
+                </div>
+                <br>
+                <div>
+                    <p>I would like the puzzles to be more challenging.</p>
+                    <input type="radio" name="moChal" value="mc1" id="mc1" />
+                    <label for="mc1">Strongly Disagree</label><br>
+                    <input type="radio" name="moChal" value="mc2" id="mc2" />
+                    <label for="mc2">Disagree</label><br>
+                    <input type="radio" name="moChal" value="mc3" id="mc3" />
+                    <label for="mc3">Neutral</label><br>
+                    <input type="radio" name="moChal" value="mc4" id="mc4" />
+                    <label for="mc4">Agree</label><br>
+                    <input type="radio" name="moChal" value="mc5" id="mc5" />
+                    <label for="mc5">Strongly Agree</label>
+                </div>
+                <br>
+                <div>
+                    <p>I would like the puzzles to be less challenging.</p>
+                    <input type="radio" name="leChal" value="lc1" id="lc1" />
+                    <label for="lc1">Strongly Disagree</label><br>
+                    <input type="radio" name="leChal" value="lc2" id="lc2" />
+                    <label for="lc2">Disagree</label><br>
+                    <input type="radio" name="leChal" value="lc3" id="lc3" />
+                    <label for="lc3">Neutral</label><br>
+                    <input type="radio" name="leChal" value="lc4" id="lc4" />
+                    <label for="lc4">Agree</label><br>
+                    <input type="radio" name="leChal" value="lc5" id="lc5" />
+                    <label for="lc5">Strongly Agree</label>
+                </div>
+                <br><br><br>
+                <div>
+                    <p>Is there any reason why we shouldn't use your data?
+                    This won't affect <br> your research particiaption credits.</p>
+                    <input type="radio" name="noDat" value="yes" id="nd1" />
+                    <label for="nd1">Yes</label><br>
+                    <input type="radio" name="noDat" value="no" id="nd2" />
+                    <label for="nd2">No</label><br>
+                </div>
+                <br><br>
+                <p>What aspect of this experiment needs more improvement?</p>
+                <textarea rows = "5" cols = "60" name = "impr">
+                    Enter details here...
+                </textarea><br>
+                <br>
+                <p>Would you recommend this experiment?</p>
+                <textarea rows = "5" cols = "60" name = "recommend">
+                    If yes, why?
+                 </textarea><br>
+                <br>
+                <input type="submit" id="submButton">
+            </form>
+    </body>
+</html>

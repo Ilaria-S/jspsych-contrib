@@ -1,115 +1,120 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src = "/dist/jspsych.js"></script>
-    <script src = "/dist/plugin-html-keyboard-response.js"></script>
-    <script src = "./jsPuzzleGame.js"></script>                                                            <!--integrate the plugin-->
-    <link   rel = "stylesheet" href = "/dist/jspsychPG.css">
-  </head>
-  <body></body>
-  <script>
 
-    var jsPsych = initJsPsych({
-      on_finish: function() {
-        jsPsych.data.displayData()
-      }
-    });
+<head>
+  <script src = "/dist/jspsych.js"></script>
+  <script src = "/dist/plugin-external-html.js"></script>
+  <script src = "/dist/plugin-html-keyboard-response.js"></script>
+  <script src = "./jsPuzzleGame.js"></script> <!--integrate the plugin-->
+  <link   rel = "stylesheet" href = "/dist/jspsychPG.css">
+</head>
 
-    // var trial_1 = {
-    //   type    : jsPsychHtmlKeyboardResponse,
-    //   stimulus: '<p>This is a normal jsPsych trial.</p>'+
-    //   '<p>Note that this example will NOT work if you opened the HTML file directly in the browser<br>'+
-    //   '(e.g. by double-clicking on it) because the external HTML page will be blocked by CORS policy.</p>'+
-    //   '<p>If you are hosting the files on a server, then the next trial will display an external HTML page.</p>'+
-    //   '<p>Press any key to continue.</p>'
-    // };
-
-    // var trial_2 = {
-    //   type          : jsPsychPuzzleGame,
-    //   url           : './simple_consent.html',
-    //   cont_btn      : 'start',
-    //   execute_script: true,
-    //   check_fn      : function() {
-    //     if (document.getElementById('consent_checkbox').checked) {
-    //       return true;
-    //     } else {
-    //       alert('You must tick the checkbox to continue with the study.')
-    //     }
-    //   }
-    // };
-    var trial_1 = {                                                                                 
-      type: jsPuzzleGame,
-      imagepath: "./images/SU/", 
-      helppath: './images/SU/su.PNG',
-      boardID: "b1",                                                                                //id's and class names have to be in double-quotes
-      trayID: "t1",
-      nextID: "np_t1",
-    };
-
-    var trial_2 = {   
-      type: jsPuzzleGame,                                                                              
-      imagepath: "./images/runPuppy/", 
-      helppath: './images/runPuppy/runPuppy.png',
-      boardID: "b2",                                                                                
-      trayID: "t2",
-      trayClass: "trayS",
-    };
-
-    var trial_3 = {                                                                                 
-      type: jsPuzzleGame,
-      imagepath: "./images/alpaca/", 
-      helppath: './images/alpaca/alpaca.png',
-      boardID: "b3",                                                                               
-      trayID: "t3",
-    };
-
-    var trial_4 = {                                                                                 
-      type: jsPuzzleGame,
-      imagepath: "./images/acadia/", 
-      helppath: './images/acadia/acadia.png',
-      boardID: "b4",                                                                                
-      trayID: "t4",
-      nextID: "np_t4",
-      trayClass: "trayS",
-    };
-
-    var trial_5 = {                                                                                 
-      type: jsPuzzleGame,
-      imagepath: "./images/toronto/", 
-      helppath: './images/toronto/toronto.png',
-      boardID: "b5",                                                                               
-      trayID: "t5",
-      nextID: "np_t5",
-    };
-
-    var trial_6 = {                                                                                 
-      type: jsPuzzleGame,
-      imagepath: "./images/otters/", 
-      helppath: './images/otters/otters.png',
-      boardID: "b6",                                                                                
-      trayID: "t6",
-      trayClass: "trayS",
-    };
-
-    var trial_7 = {                                                                                 
-      type: jsPuzzleGame,
-      imagepath: "./images/monkey/", 
-      helppath: './images/monkey/monkey.png',
-      boardID: "b7",                                                                               
-      trayID: "t7",
-    };
-
-    var trial_8 = {                                                                                 
-      type: jsPuzzleGame,
-      imagepath: "./images/otter/", 
-      helppath: './images/otter/otter.png',
-      boardID: "b8",                                                                                
-      trayID: "t8",
-      trayClass: "trayS",
-    };
+<body></body>
+<script>
+  /*initialize jsPsych*/ 
+  var jsPsych = initJsPsych({
+    on_finish: function () {
+      jsPsych.data.displayData()
+    }
+  });
 
 
-    jsPsych.run([trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8]);
-    
-  </script>
+  /*Check Functions for external HTML plugin*/ 
+  var check_consent = function (elem) {                                                             //function that checks whether participant checked informed consent box
+    if (document.getElementById('infCons').checked) {
+      return true;
+    }
+    else {
+      alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+      return false;
+    }
+    return false;
+  };
+
+
+
+  /*initialize trials*/ 
+  var welcome = {
+    type    : jsPsychExternalHtml,
+    url     : "./other/welcome.html",
+    check_fn: check_consent,
+    cont_btn: "startExp",
+  }
+
+  var trial_1 = {
+    type     : jsPuzzleGame,
+    imagepath: "./images/SU/",
+    helppath : './images/SU/su.PNG',
+    boardID  : "b1",                   //id's and class names have to be in double-quotes
+    trayID   : "t1",
+    nextID   : "np_t1",
+  };
+
+  var trial_2 = {
+    type     : jsPuzzleGame,
+    imagepath: "./images/runPuppy/",
+    helppath : './images/runPuppy/runPuppy.png',
+    boardID  : "b2",
+    trayID   : "t2",
+    trayClass: "trayS",
+  };
+
+  var trial_3 = {
+    type     : jsPuzzleGame,
+    imagepath: "./images/alpaca/",
+    helppath : './images/alpaca/alpaca.png',
+    boardID  : "b3",
+    trayID   : "t3",
+  };
+
+  var trial_4 = {
+    type     : jsPuzzleGame,
+    imagepath: "./images/acadia/",
+    helppath : './images/acadia/acadia.png',
+    boardID  : "b4",
+    trayID   : "t4",
+    nextID   : "np_t4",
+    trayClass: "trayS",
+  };
+
+  var trial_5 = {
+    type     : jsPuzzleGame,
+    imagepath: "./images/toronto/",
+    helppath : './images/toronto/toronto.png',
+    boardID  : "b5",
+    trayID   : "t5",
+    nextID   : "np_t5",
+  };
+
+  var trial_6 = {
+    type     : jsPuzzleGame,
+    imagepath: "./images/otters/",
+    helppath : './images/otters/otters.png',
+    boardID  : "b6",
+    trayID   : "t6",
+    trayClass: "trayS",
+  };
+
+  var trial_7 = {
+    type     : jsPuzzleGame,
+    imagepath: "./images/monkey/",
+    helppath : './images/monkey/monkey.png',
+    boardID  : "b7",
+    trayID   : "t7",
+  };
+
+  var trial_8 = {
+    type     : jsPuzzleGame,
+    imagepath: "./images/otter/",
+    helppath : './images/otter/otter.png',
+    boardID  : "b8",
+    trayID   : "t8",
+    trayClass: "trayS",
+  };
+
+
+  jsPsych.run([welcome, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8]);
+
+</script>
+
 </html>
