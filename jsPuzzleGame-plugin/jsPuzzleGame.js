@@ -28,6 +28,11 @@ var jsPuzzleGame = (function (jspsych) {
         type: jspsych.ParameterType.STRING,
         default: "tray",
       },
+      
+      trayPosition:{
+        type: jspsych.ParameterType.INT, 
+        default: 1,                                                                                 //1: bottom (1 & 2), 2: tray is on top(3 & 4), 3: trial 5 & 6, 4: trial 7 & 8
+      }
     },
   };
 
@@ -64,7 +69,19 @@ var jsPuzzleGame = (function (jspsych) {
       var tray_id = trial.trayID;
       var board_id = trial.boardID;
       var start_time = performance.now();                                                           //this variable is later used to calculate the rt
-      var new_html = '<div class = ' + tray_class + ' id =' + tray_id + '>' + '</div>' + '<div class = "board" id = ' + board_id + '>' + '</div>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
+
+      if (trial.trayPosition == 1){
+        var new_html = '<br><div class = "board" id = ' + board_id + '>' + '</div><br>' +'<div class = ' + tray_class + ' id =' + tray_id + '>' + '</div><br>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
+      }else if (trial.trayPosition == 2){
+        var new_html = '<br><div class = ' + tray_class + ' id =' + tray_id + '>' + '</div><br>' + '<div class = "board" id = ' + board_id + '>' + '</div><br>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
+      }else if (trial.trayPosition == 3){
+        var new_html = '<br><div class = "container"><div class = "board" id = ' + board_id + '>' + '</div><br>' +'<div class = ' + tray_class + ' id =' + tray_id + '>' + '</div></div><br>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
+      }else{
+        var new_html = '<br><div class = "container><div class = ' + tray_class + ' id =' + tray_id + '>' + '</div><br>' + '<div class = "board" id = ' + board_id + '>' + '</div></div><br>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
+      }
+
+      
+
 
       var rows = 3;  //I split the image into 4 wide and 3 high
       var columns = 4;
