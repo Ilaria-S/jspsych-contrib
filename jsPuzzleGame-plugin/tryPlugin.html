@@ -2,24 +2,35 @@
 <html>
 
 <head>
-  <script src = "/dist/jspsych.js"></script>
+  <script src = "/dist/jspsych.js"></script>                                                        <!--load jsPsych and plugins-->
   <script src = "/dist/plugin-external-html.js"></script>
   <script src = "/dist/plugin-html-keyboard-response.js"></script>
-  <script src = "./jsPuzzleGame.js"></script> <!--integrate the plugin-->
-  <link   rel = "stylesheet" href = "/dist/jspsychPG.css">
+  <script src = "/dist/plugin-html-button-response.js"></script>
+  <script src="/dist/plugin-survey.js"></script>
+  <script src = "/dist/plugin-webgazer-init-camera.js"></script>                                    <!--load all webgazer related stuff-->
+  <script src = "/dist/plugin-webgazer-calibrate.js"></script>
+  <script src = "/dist/plugin-webgazer-validate.js"></script>
+  <script src = "/examples/js/webgazer/webgazer.js"></script>
+  <script src = "/dist/extension-webgazer.js"></script>
+  <script src = "./jsPuzzleGame.js"></script>                                                       <!--integrate the plugin-->
+  <link   rel = "stylesheet" href = "/dist/jspsychPG.css">                                          <!--the basic jspsych stylesheet adapted to my plugin-->
+  <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">      <!--the specific stylesheet for the survey plugin-->
 </head>
 
 <body></body>
 <script>
-  /*initialize jsPsych*/ 
+  /*initialize jsPsych*/
   var jsPsych = initJsPsych({
     on_finish: function () {
       jsPsych.data.displayData()
-    }
+    },
+    extensions: [
+      { type: jsPsychExtensionWebgazer, }
+    ]
   });
 
 
-  /*Check Functions for external HTML plugin*/ 
+  /*Check Functions for external HTML plugin*/
   var check_consent = function (elem) {                                                             //function that checks whether participant checked informed consent box
     if (document.getElementById('infCons').checked) {
       return true;
@@ -33,13 +44,63 @@
 
 
 
-  /*initialize trials*/ 
+
+
+  /*initialize trials*/
   var welcome = {
     type    : jsPsychExternalHtml,
     url     : "./other/welcome.html",
     check_fn: check_consent,
     cont_btn: "startExp",
+  };
+
+  var camera_instructions = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `
+          <p>In order to participate you must allow the experiment to use your camera.</p>
+          <p>You will be prompted to do this on the next screen.</p>
+          <p>If you do not wish to allow use of your camera, you cannot participate in this experiment.<p>
+          <p>It may take up to 30 seconds for the camera to initialize after you give permission.</p>
+        `,
+        choices: ['Got it'],
+      }
+
+      var init_camera = {
+        type: jsPsychWebgazerInitCamera
+      }
+
+      var calibration_instructions = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `
+          <p>Now you'll calibrate the eye tracking, so that the software can use the image of your eyes to predict where you are looking.</p>
+          <p>You'll see a series of dots appear on the screen. Look at each dot and click on it.</p>
+        `,
+        choices: ['Got it'],
+      }
+
+      var calibration = {
+        type: jsPsychWebgazerCalibrate,
+        calibration_points: [
+          [25,25],[75,25],[50,50],[25,75],[75,75]
+        ],
+        repetitions_per_point: 2,
+        randomize_calibration_order: true
+      }
+
+  var tutorial = {
+    type          : jsPsychExternalHtml,
+    url           : "./other/tutorial.html",
+    execute_script: true,
+    cont_btn      : "tutBtn",
+
   }
+
+  // var tutorial = {
+  //   type    : jsPsychHtmlButtonResponse,
+  //   stimulus: '<p>Please watch the following tutorial carefully. You can pause the tutorial or rewatch it as. You may proceed with the study after you have watched the tutorial once.</p><br><video autoplay><source src="./other/tutorial.mp4" type=video/mp4></video>',
+  //   choices : ['Click here to start the experiment.'],
+
+  // };
 
   var trial_1 = {
     type     : jsPuzzleGame,
@@ -48,6 +109,14 @@
     boardID  : "b1",                   //id's and class names have to be in double-quotes
     trayID   : "t1",
     nextID   : "np_t1",
+    extensions: [{
+      type: jsPsychExtensionWebgazer, 
+      params: { 
+        targets: ['#b1']
+      }
+    }
+  ]
+    
   };
 
   var trial_2 = {
@@ -112,8 +181,66 @@
     trayClass: "trayS",
   };
 
+  var survey = {
+  type: jsPsychSurvey,
+  pages: [
+    [
+      {
+        type: 'html',
+        prompt: 'Thank you very much for participating in our experiment. We would like to ask you a few questions to improve this experiment in the future. Please tick the relevant box to indicate how you respond to each statement.',
+      },
+      {
+        type: 'multi-choice',
+        prompt: "The instructions at the beginning of the experiment were perfectly clear.", 
+        name: 'instructions', 
+        options: ['Strongly Agree', 'Somewhat Agree', 'Neither Agree Nor Disagree', 'Somewhat Disagree', 'Strongly Disagree'], 
+      }, 
+      {
+        type: 'multi-choice',
+        prompt: "The tutorial provided enough information to perform the puzzle task", 
+        name: 'tutorial', 
+        options: ['Strongly Agree', 'Somewhat Agree', 'Neither Agree Nor Disagree', 'Somewhat Disagree', 'Strongly Disagree'], 
+      }, 
+      {
+        type: 'multi-choice',
+        prompt: "I would like the puzzles to be more challenging.", 
+        name: 'moreChallenge', 
+        options: ['Strongly Agree', 'Somewhat Agree', 'Neither Agree Nor Disagree', 'Somewhat Disagree', 'Strongly Disagree'], 
+      }, 
+      {
+        type: 'multi-choice',
+        prompt: "I would like the puzzles to be less challenging.", 
+        name: 'lessChallenge', 
+        options: ['Strongly Agree', 'Somewhat Agree', 'Neither Agree Nor Disagree', 'Somewhat Disagree', 'Strongly Disagree'], 
+      }, 
+      {
+        type: 'text',
+        prompt: "If there is a reason why you think we should not use your data, please indicate below. If you participate in this research through SONA, your answer will not affect your research participation credits. ", 
+        name: 'badData', 
+        textbox_rows: 10,
+        textbox_columns: 100,
+      }, 
+      {
+        type: 'text',
+        prompt: "What aspect of this experiment needs more improvement?", 
+        name: 'improve', 
+        textbox_rows: 10,
+        textbox_columns: 100,
+      }, 
+      {
+        type: 'text',
+        prompt: "Would you recommend this experiment to a Friend? If yes, why? If no, why not?", 
+        name: 'recommend', 
+        textbox_rows: 10,
+        textbox_columns: 100,
+      }
+      
+    ]
+  ],
+};
 
-  jsPsych.run([welcome, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8]);
+
+  jsPsych.run([welcome, camera_instructions, init_camera, calibration_instructions, calibration, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]); //deleted the tutorial trial for now and the webgazer stuff: camera_instructions, init_camera, calibration_instructions, calibration, tutorial,
 
 </script>
 
