@@ -13,6 +13,7 @@
   <script src = "/examples/js/webgazer/webgazer.js"></script>
   <script src = "/dist/extension-webgazer.js"></script>
   <script src = "./jsPuzzleGame.js"></script> <!--integrate the plugin-->
+  <script src="jatos.js"></script> <!--add jatos-->
   <link   rel = "stylesheet" href = "/dist/jspsychPG.css"> <!--the basic jspsych stylesheet adapted to my plugin-->
   <link   rel = "stylesheet" href = "https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">
   <!--the specific stylesheet for the survey plugin-->
@@ -22,9 +23,7 @@
 <script>
   /*initialize jsPsych*/
   var jsPsych = initJsPsych({
-    on_finish: function () {
-      jsPsych.data.displayData()
-    },
+    on_finish: () => jatos.endStudy(jsPsych.data.get().json()),                                     //tell jsPsych to send the data to jatos once finished
     extensions: [
       { type: jsPsychExtensionWebgazer, }
     ]
@@ -241,8 +240,12 @@
   };
 
 
-  jsPsych.run([welcome, camera_instructions, init_camera, calibration_instructions, calibration, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]); //deleted the tutorial trial for now and the webgazer stuff: camera_instructions, init_camera, calibration_instructions, calibration, tutorial,
 
+  jatos.onLoad(() => {
+    jsPsych.run([welcome, tutorial, camera_instructions, init_camera, calibration_instructions, calibration, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
+  });
+
+  
 </script>
 
 </html>
