@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src = "dist/jspsych.js"></script> <!--load jsPsych and plugins-->
+  <script src = "dist/plugin-external-html.js"></script>
+  <script src = "dist/plugin-html-keyboard-response.js"></script>
+  <script src = "dist/plugin-html-button-response.js"></script>
+  <script src = "dist/plugin-survey.js"></script>
+  <script src = "dist/plugin-webgazer-init-camera.js"></script> <!--load all webgazer related stuff-->
+  <script src = "dist/plugin-webgazer-calibrate.js"></script>
+  <script src = "dist/plugin-webgazer-validate.js"></script>
+  <script src = "examples/js/webgazer/webgazer.js"></script>
+  <script src = "dist/extension-webgazer.js"></script>
+  <script src = "jspsych-contrib/jsPuzzleGame-plugin/jsPuzzleGame.js"></script> <!--integrate the plugin-->
+  <script src="jatos.js"></script> <!--add jatos-->
+  <link   rel = "stylesheet" href = "dist/jspsychPG.css"> <!--the basic jspsych stylesheet adapted to my plugin-->
+  <link   rel = "stylesheet" href = "https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">
+  <!--the specific stylesheet for the survey plugin-->
+</head>
+
+<body></body>
+<script>
+  /*initialize jsPsych*/
+  var jsPsych = initJsPsych({
+    on_finish: () => jatos.endStudy(jsPsych.data.get().json()),                                     //tell jsPsych to send the data to jatos once finished
+    extensions: [
+      { type: jsPsychExtensionWebgazer, }
+    ]
+  });
+
+
+  /*Check Functions for external HTML plugin*/
+  var check_consent = function (elem) {                                                             //function that checks whether participant checked informed consent box
+    if (document.getElementById('infCons').checked) {
+      return true;
+    }
+    else {
+      alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+      return false;
+    }
+    return false;
+  };
+
+
+
+
+
+  /*initialize trials*/
+  var welcome = {
+    type    : jsPsychExternalHtml,
+    url     : "jspsych-contrib/jsPuzzleGame-plugin/other/welcome.html",
+    check_fn: check_consent,
+    cont_btn: "startExp",
+  };
+
+  var camera_instructions = {
+    type    : jsPsychHtmlButtonResponse,
+    stimulus: `
+          <p>In order to participate you must allow the experiment to use your camera.</p>
+          <p>You will be prompted to do this on the next screen.</p>
+          <p>If you do not wish to allow use of your camera, you cannot participate in this experiment.<p>
+          <p>It may take up to 30 seconds for the camera to initialize after you give permission.</p>
+        `,
+    choices: ['Got it'],
+  }
+
+  var init_camera = {
+    type: jsPsychWebgazerInitCamera
+  }
+
+  var calibration_instructions = {
+    type    : jsPsychHtmlButtonResponse,
+    stimulus: `
+          <p>Now you'll calibrate the eye tracking, so that the software can use the image of your eyes to predict where you are looking.</p>
+          <p>You'll see a series of dots appear on the screen. Look at each dot and click on it.</p>
+        `,
+    choices: ['Got it'],
+  }
+
+  var calibration = {
+    type              : jsPsychWebgazerCalibrate,
+    calibration_points: [
+      [25, 25], [75, 25], [50, 50], [25, 75], [75, 75]
+    ],
+    repetitions_per_point      : 2,
+    randomize_calibration_order: true
+  }
+
+  var tutorial = {
+    type          : jsPsychExternalHtml,
+    url           : "jspsych-contrib/jsPuzzleGame-plugin/other/tutorial.html",
+    execute_script: true,
+    cont_btn      : "tutBtn",
+
+  }
+
+  // var tutorial = {
+  //   type    : jsPsychHtmlButtonResponse,
+  //   stimulus: '<p>Please watch the following tutorial carefully. You can pause the tutorial or rewatch it as. You may proceed with the study after you have watched the tutorial once.</p><br><video autoplay><source src="./other/tutorial.mp4" type=video/mp4></video>',
+  //   choices : ['Click here to start the experiment.'],
+
+  // };
+
+  var trial_1 = {
+    type      : jsPuzzleGame,
+    imagepath : "jspsych-contrib/jsPuzzleGame-plugin/images/SU/",
+    helppath  : 'jspsych-contrib/jsPuzzleGame-plugin/images/SU/su.PNG',
+    boardID   : "b1",                   //id's and class names have to be in double-quotes
+    trayID    : "t1",
+    nextID    : "np_t1",
+    extensions: [{
+      type  : jsPsychExtensionWebgazer,
+      params: {
+        targets: ['#b1']
+      }
+    }
+    ]
+
+  };
+
+  var trial_2 = {
+    type     : jsPuzzleGame,
+    imagepath: "jspsych-contrib/jsPuzzleGame-plugin/images/runPuppy/",
+    helppath : 'jspsych-contrib/jsPuzzleGame-plugin/images/runPuppy/runPuppy.png',
+    boardID  : "b2",
+    trayID   : "t2",
+    trayClass: "trayS",
+  };
+
+  var trial_3 = {
+    type     : jsPuzzleGame,
+    imagepath: "jspsych-contrib/jsPuzzleGame-plugin/images/alpaca/",
+    helppath : 'jspsych-contrib/jsPuzzleGame-plugin/images/alpaca/alpaca.png',
+    boardID  : "b3",
+    trayID   : "t3",
+  };
+
+  var trial_4 = {
+    type     : jsPuzzleGame,
+    imagepath: "jspsych-contrib/jsPuzzleGame-plugin/images/acadia/",
+    helppath : 'jspsych-contrib/jsPuzzleGame-plugin/images/acadia/acadia.png',
+    boardID  : "b4",
+    trayID   : "t4",
+    nextID   : "np_t4",
+    trayClass: "trayS",
+  };
+
+  var trial_5 = {
+    type     : jsPuzzleGame,
+    imagepath: "jspsych-contrib/jsPuzzleGame-plugin/images/toronto/",
+    helppath : 'jspsych-contrib/jsPuzzleGame-plugin/images/toronto/toronto.png',
+    boardID  : "b5",
+    trayID   : "t5",
+    nextID   : "np_t5",
+  };
+
+  var trial_6 = {
+    type     : jsPuzzleGame,
+    imagepath: "jspsych-contrib/jsPuzzleGame-plugin/images/otters/",
+    helppath : 'jspsych-contrib/jsPuzzleGame-plugin/images/otters/otters.png',
+    boardID  : "b6",
+    trayID   : "t6",
+    trayClass: "trayS",
+  };
+
+  var trial_7 = {
+    type     : jsPuzzleGame,
+    imagepath: "jspsych-contrib/jsPuzzleGame-plugin/images/monkey/",
+    helppath : 'jspsych-contrib/jsPuzzleGame-plugin/images/monkey/monkey.png',
+    boardID  : "b7",
+    trayID   : "t7",
+  };
+
+  var trial_8 = {
+    type     : jsPuzzleGame,
+    imagepath: "jspsych-contrib/jsPuzzleGame-plugin/images/otter/",
+    helppath : 'jspsych-contrib/jsPuzzleGame-plugin/images/otter/otter.png',
+    boardID  : "b8",
+    trayID   : "t8",
+    trayClass: "trayS",
+  };
+
+  var survey = {
+    type : jsPsychSurvey,
+    pages: [
+      [
+        {
+          type  : 'html',
+          prompt: 'Thank you very much for participating in our experiment. We would like to ask you a few questions to improve this experiment in the future. Please tick the relevant box to indicate how you respond to each statement.',
+        },
+        {
+          type   : 'multi-choice',
+          prompt : "The instructions at the beginning of the experiment were perfectly clear.",
+          name   : 'instructions',
+          options: ['Strongly Agree', 'Somewhat Agree', 'Neither Agree Nor Disagree', 'Somewhat Disagree', 'Strongly Disagree'],
+        },
+        {
+          type   : 'multi-choice',
+          prompt : "The tutorial provided enough information to perform the puzzle task",
+          name   : 'tutorial',
+          options: ['Strongly Agree', 'Somewhat Agree', 'Neither Agree Nor Disagree', 'Somewhat Disagree', 'Strongly Disagree'],
+        },
+        {
+          type   : 'multi-choice',
+          prompt : "I would like the puzzles to be more challenging.",
+          name   : 'moreChallenge',
+          options: ['Strongly Agree', 'Somewhat Agree', 'Neither Agree Nor Disagree', 'Somewhat Disagree', 'Strongly Disagree'],
+        },
+        {
+          type   : 'multi-choice',
+          prompt : "I would like the puzzles to be less challenging.",
+          name   : 'lessChallenge',
+          options: ['Strongly Agree', 'Somewhat Agree', 'Neither Agree Nor Disagree', 'Somewhat Disagree', 'Strongly Disagree'],
+        },
+        {
+          type           : 'text',
+          prompt         : "If there is a reason why you think we should not use your data, please indicate below. If you participate in this research through SONA, your answer will not affect your research participation credits. ",
+          name           : 'badData',
+          textbox_rows   : 10,
+          textbox_columns: 100,
+        },
+        {
+          type           : 'text',
+          prompt         : "What aspect of this experiment needs more improvement?",
+          name           : 'improve',
+          textbox_rows   : 10,
+          textbox_columns: 100,
+        },
+        {
+          type           : 'text',
+          prompt         : "Would you recommend this experiment to a Friend? If yes, why? If no, why not?",
+          name           : 'recommend',
+          textbox_rows   : 10,
+          textbox_columns: 100,
+        }
+
+      ]
+    ],
+  };
+
+
+
+  jatos.onLoad(() => {
+    jsPsych.run([welcome, camera_instructions, init_camera, calibration_instructions, calibration, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
+  });
+
+  
+</script>
+
+</html>
