@@ -13,7 +13,6 @@
   <script src = "/examples/js/webgazer/webgazer.js"></script>
   <script src = "/dist/extension-webgazer.js"></script>
   <script src = "./jsPuzzleGame.js"></script> <!--integrate the plugin-->
-  <script src="jatos.js"></script> <!--add jatos; this file path looks off-->
   <link   rel = "stylesheet" href = "/dist/jspsychPG.css"> <!--the basic jspsych stylesheet adapted to my plugin-->
   <link   rel = "stylesheet" href = "https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">
   <!--the specific stylesheet for the survey plugin-->
@@ -23,7 +22,9 @@
 <script>
   /*initialize jsPsych*/
   var jsPsych = initJsPsych({
-    on_finish: () => jatos.endStudy(jsPsych.data.get().json()),                                     //tell jsPsych to send the data to jatos once finished
+    on_finish: function () {
+      jsPsych.data.displayData()
+    },                                     
     extensions: [
       { type: jsPsychExtensionWebgazer, }
     ]
@@ -95,12 +96,12 @@
 
   }
 
-  // var tutorial = {
-  //   type    : jsPsychHtmlButtonResponse,
-  //   stimulus: '<p>Please watch the following tutorial carefully. You can pause the tutorial or rewatch it as. You may proceed with the study after you have watched the tutorial once.</p><br><video autoplay><source src="./other/tutorial.mp4" type=video/mp4></video>',
-  //   choices : ['Click here to start the experiment.'],
+  var tutorial = {
+    type    : jsPsychHtmlButtonResponse,
+    stimulus: '<p>Please watch the following tutorial carefully. You can pause the tutorial or rewatch it as. You may proceed with the study after you have watched the tutorial once.</p><br><video autoplay><source src="./other/tutorial.mp4" type=video/mp4></video>',
+    choices : ['Click here to start the experiment.'],
 
-  // };
+  };
 
   var trial_1 = {
     type      : jsPuzzleGame,
@@ -241,9 +242,7 @@
 
 
 
-  jatos.onLoad(() => {
-    jsPsych.run([welcome, tutorial, camera_instructions, init_camera, calibration_instructions, calibration, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
-  });
+  jsPsych.run([welcome, camera_instructions, init_camera, calibration_instructions, calibration, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
 
   
 </script>
