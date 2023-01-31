@@ -7,11 +7,11 @@
   <script src = "/dist/plugin-html-keyboard-response.js"></script>
   <script src = "/dist/plugin-html-button-response.js"></script>
   <script src = "/dist/plugin-survey.js"></script>
-  <script src = "/dist/plugin-webgazer-init-camera.js"></script> <!--load all webgazer related stuff-->
+  <!-- <script src = "/dist/plugin-webgazer-init-camera.js"></script> load all webgazer related stuff
   <script src = "/dist/plugin-webgazer-calibrate.js"></script>
   <script src = "/dist/plugin-webgazer-validate.js"></script>
   <script src = "/examples/js/webgazer/webgazer.js"></script>
-  <script src = "/dist/extension-webgazer.js"></script>
+  <script src = "/dist/extension-webgazer.js"></script> -->
   <script src = "/dist/extension-mouse-tracking.js"></script> <!--load mousetracking extension-->
   <script src = "./jsPuzzleGame.js"></script> <!--integrate the plugin-->
   <link   rel = "stylesheet" href = "/dist/jspsychPG.css"> <!--the basic jspsych stylesheet adapted to my plugin-->
@@ -27,7 +27,7 @@
       jsPsych.data.displayData()
     },                                     
     extensions: [
-      { type: jsPsychExtensionWebgazer, }, 
+      //{ type: jsPsychExtensionWebgazer, }, 
       {type: jsPsychExtensionMouseTracking}
     ]
   });
@@ -57,38 +57,38 @@
     cont_btn: "startExp",
   };
 
-  var camera_instructions = {
-    type    : jsPsychHtmlButtonResponse,
-    stimulus: `
-          <p>In order to participate you must allow the experiment to use your camera.</p>
-          <p>You will be prompted to do this on the next screen.</p>
-          <p>If you do not wish to allow use of your camera, you cannot participate in this experiment.<p>
-          <p>It may take up to 30 seconds for the camera to initialize after you give permission.</p>
-        `,
-    choices: ['Got it'],
-  }
+  // var camera_instructions = {
+  //   type    : jsPsychHtmlButtonResponse,
+  //   stimulus: `
+  //         <p>In order to participate you must allow the experiment to use your camera.</p>
+  //         <p>You will be prompted to do this on the next screen.</p>
+  //         <p>If you do not wish to allow use of your camera, you cannot participate in this experiment.<p>
+  //         <p>It may take up to 30 seconds for the camera to initialize after you give permission.</p>
+  //       `,
+  //   choices: ['Got it'],
+  // }
 
-  var init_camera = {
-    type: jsPsychWebgazerInitCamera
-  }
+  // var init_camera = {
+  //   type: jsPsychWebgazerInitCamera
+  // }
 
-  var calibration_instructions = {
-    type    : jsPsychHtmlButtonResponse,
-    stimulus: `
-          <p>Now you'll calibrate the eye tracking, so that the software can use the image of your eyes to predict where you are looking.</p>
-          <p>You'll see a series of dots appear on the screen. Look at each dot and click on it.</p>
-        `,
-    choices: ['Got it'],
-  }
+  // var calibration_instructions = {
+  //   type    : jsPsychHtmlButtonResponse,
+  //   stimulus: `
+  //         <p>Now you'll calibrate the eye tracking, so that the software can use the image of your eyes to predict where you are looking.</p>
+  //         <p>You'll see a series of dots appear on the screen. Look at each dot and click on it.</p>
+  //       `,
+  //   choices: ['Got it'],
+  // }
 
-  var calibration = {
-    type              : jsPsychWebgazerCalibrate,
-    calibration_points: [
-      [25, 25], [75, 25], [50, 50], [25, 75], [75, 75]
-    ],
-    repetitions_per_point      : 2,
-    randomize_calibration_order: true
-  }
+  // var calibration = {
+  //   type              : jsPsychWebgazerCalibrate,
+  //   calibration_points: [
+  //     [25, 25], [75, 25], [50, 50], [25, 75], [75, 75]
+  //   ],
+  //   repetitions_per_point      : 2,
+  //   randomize_calibration_order: true
+  // }
 
  
 
@@ -96,12 +96,12 @@
     type    : jsPsychHtmlButtonResponse,
     stimulus: '<p>Please watch the following tutorial carefully. You can pause the tutorial or rewatch it as. You may proceed with the study after you have watched the tutorial once.</p><br><video autoplay><source src="./other/tutorial.mp4" type=video/mp4></video>',
     choices : ['Click here to start the experiment.'],
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
     {type: jsPsychExtensionMouseTracking}
     ]
   };
@@ -113,13 +113,13 @@
     boardID   : "b1",                   //id's and class names have to be in double-quotes
     trayID    : "t1",
     nextID    : "np_t1",
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
-    {type: jsPsychExtensionMouseTracking}
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
+    // {type: jsPsychExtensionMouseTracking}
     ]
 
   };
@@ -131,12 +131,12 @@
     boardID  : "b2",
     trayID   : "t2",
     trayClass: "trayS",
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
     {type: jsPsychExtensionMouseTracking}
     ]
   };
@@ -147,12 +147,12 @@
     helppath : './images/alpaca/alpaca.png',
     boardID  : "b3",
     trayID   : "t3",
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
     {type: jsPsychExtensionMouseTracking}
     ]
   };
@@ -165,12 +165,12 @@
     trayID   : "t4",
     nextID   : "np_t4",
     trayClass: "trayS",
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
     {type: jsPsychExtensionMouseTracking}
     ]
   };
@@ -182,12 +182,12 @@
     boardID  : "b5",
     trayID   : "t5",
     nextID   : "np_t5",
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
     {type: jsPsychExtensionMouseTracking}
     ]
   };
@@ -199,12 +199,12 @@
     boardID  : "b6",
     trayID   : "t6",
     trayClass: "trayS",
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
     {type: jsPsychExtensionMouseTracking}
     ]
   };
@@ -215,12 +215,12 @@
     helppath : './images/monkey/monkey.png',
     boardID  : "b7",
     trayID   : "t7",
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
     {type: jsPsychExtensionMouseTracking}
     ]
   };
@@ -232,12 +232,12 @@
     boardID  : "b8",
     trayID   : "t8",
     trayClass: "trayS",
-    extensions: [{
-      type  : jsPsychExtensionWebgazer,
-      params: {
-        targets: ['#b1']
-      }
-    }, 
+    extensions: [//{
+    //   type  : jsPsychExtensionWebgazer,
+    //   params: {
+    //     targets: ['#b1']
+    //   }
+    // }, 
     {type: jsPsychExtensionMouseTracking}
     ]
   };
@@ -302,7 +302,8 @@
 
 
 
-  jsPsych.run([welcome, camera_instructions, init_camera, calibration_instructions, calibration, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
+  jsPsych.run([welcome, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
+  //  jsPsych.run([welcome, camera_instructions, init_camera, calibration_instructions, calibration, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
 
   
 </script>
