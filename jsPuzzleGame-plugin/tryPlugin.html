@@ -7,6 +7,7 @@
   <script src = "/dist/plugin-html-keyboard-response.js"></script>
   <script src = "/dist/plugin-html-button-response.js"></script>
   <script src = "/dist/plugin-survey.js"></script>
+  <script src="/dist/plugin-survey-text.js"></script>
   <!-- <script src = "/dist/plugin-webgazer-init-camera.js"></script> load all webgazer related stuff
   <script src = "/dist/plugin-webgazer-calibrate.js"></script>
   <script src = "/dist/plugin-webgazer-validate.js"></script>
@@ -55,6 +56,18 @@
     url     : "./other/welcome.html",
     check_fn: check_consent,
     cont_btn: "startExp",
+  };
+
+  var partNumber = {
+    type: jsPsychSurveyText, 
+    questions: [
+      {prompt: 'What is the participant ID you were assigned?', name: 'participant_ID', required: true},
+    ], 
+    on_finish: function(data){
+      var responses = JSON.parse(data.responses);
+      var partID = responses.participant_ID;
+      jsPsych.data.addProperties({participantID: partID})
+    },
   };
 
   // var camera_instructions = {
@@ -302,7 +315,7 @@
 
 
 
-  jsPsych.run([welcome, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
+  jsPsych.run([welcome, partNumber, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
   //  jsPsych.run([welcome, camera_instructions, init_camera, calibration_instructions, calibration, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
 
   
