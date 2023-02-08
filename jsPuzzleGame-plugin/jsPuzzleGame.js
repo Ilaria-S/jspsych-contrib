@@ -76,7 +76,7 @@ var jsPuzzleGame = (function (jspsych) {
         var new_html = '<br><div class = ' + tray_class + ' id =' + tray_id + '>' + '</div><br>' + '<div class = "board" id = ' + board_id + '>' + '</div><br>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
       }else if (trial.trayPosition == 3){
         var new_html = '<br><div class = "container"><div class = "board" id = ' + board_id + '>' + '</div><br>' +'<div class = ' + tray_class + ' id =' + tray_id + '>' + '</div></div><br>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
-      }else{
+      }else if (trial.trayPosition ==4){
         var new_html = '<br><div class = "container><div class = ' + tray_class + ' id =' + tray_id + '>' + '</div><br>' + '<div class = "board" id = ' + board_id + '>' + '</div></div><br>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
       }
 

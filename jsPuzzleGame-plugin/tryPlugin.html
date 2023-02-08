@@ -8,6 +8,7 @@
   <script src = "/dist/plugin-html-button-response.js"></script>
   <script src = "/dist/plugin-survey.js"></script>
   <script src="/dist/plugin-survey-text.js"></script>
+  <script src = "/dist/plugin-html-keyboard-response.js"></script>
   <!-- <script src = "/dist/plugin-webgazer-init-camera.js"></script> load all webgazer related stuff
   <script src = "/dist/plugin-webgazer-calibrate.js"></script>
   <script src = "/dist/plugin-webgazer-validate.js"></script>
@@ -61,14 +62,19 @@
   var partNumber = {
     type: jsPsychSurveyText, 
     questions: [
-      {prompt: 'What is the participant ID you were assigned?', name: 'participant_ID', required: true},
+      {prompt: 'What is the participant ID you were assigned?', required: true},
     ], 
-    on_finish: function(data){
-      var responses = JSON.parse(data.responses);
-      var partID = responses.participant_ID;
-      jsPsych.data.addProperties({participantID: partID})
-    },
   };
+
+  //this trial was supposed to display the participant ID but it returns undefined; remember to add the variable to the timeline when uncommenting
+  // var letter_display = {
+  //   type: jsPsychHtmlKeyboardResponse,
+  //   stimulus:'',
+  //   on_start:function(trial){
+  //      trial.stimulus =jsPsych.data.getLastTrialData().select('responses').values.Q0
+  //   }
+  // };
+
 
   // var camera_instructions = {
   //   type    : jsPsychHtmlButtonResponse,
@@ -125,7 +131,7 @@
     helppath  : './images/SU/su.PNG',
     boardID   : "b1",                   //id's and class names have to be in double-quotes
     trayID    : "t1",
-    nextID    : "np_t1",
+    trayPosition: 1,
     extensions: [//{
     //   type  : jsPsychExtensionWebgazer,
     //   params: {
@@ -144,6 +150,7 @@
     boardID  : "b2",
     trayID   : "t2",
     trayClass: "trayS",
+    trayPosition: 1,
     extensions: [//{
     //   type  : jsPsychExtensionWebgazer,
     //   params: {
@@ -160,6 +167,7 @@
     helppath : './images/alpaca/alpaca.png',
     boardID  : "b3",
     trayID   : "t3",
+    trayPosition: 2,
     extensions: [//{
     //   type  : jsPsychExtensionWebgazer,
     //   params: {
@@ -176,8 +184,8 @@
     helppath : './images/acadia/acadia.png',
     boardID  : "b4",
     trayID   : "t4",
-    nextID   : "np_t4",
     trayClass: "trayS",
+    trayPosition: 2,
     extensions: [//{
     //   type  : jsPsychExtensionWebgazer,
     //   params: {
@@ -194,7 +202,7 @@
     helppath : './images/toronto/toronto.png',
     boardID  : "b5",
     trayID   : "t5",
-    nextID   : "np_t5",
+    trayPosition: 3,
     extensions: [//{
     //   type  : jsPsychExtensionWebgazer,
     //   params: {
@@ -212,6 +220,7 @@
     boardID  : "b6",
     trayID   : "t6",
     trayClass: "trayS",
+    trayPosition: 3,
     extensions: [//{
     //   type  : jsPsychExtensionWebgazer,
     //   params: {
@@ -228,6 +237,7 @@
     helppath : './images/monkey/monkey.png',
     boardID  : "b7",
     trayID   : "t7",
+    trayPosition: 3,
     extensions: [//{
     //   type  : jsPsychExtensionWebgazer,
     //   params: {
@@ -245,6 +255,7 @@
     boardID  : "b8",
     trayID   : "t8",
     trayClass: "trayS",
+    trayPosition: 3,
     extensions: [//{
     //   type  : jsPsychExtensionWebgazer,
     //   params: {
