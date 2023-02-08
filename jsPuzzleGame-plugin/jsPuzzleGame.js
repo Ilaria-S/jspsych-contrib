@@ -129,6 +129,8 @@ var jsPuzzleGame = (function (jspsych) {
       };
 
       function load_img() {
+        var tile_id_num = 1;
+        var tile_id_num_str = '';
         for (let r = 0; r < rows; r++) {                                                            //for each element in our board matrix, the html element image is created -> <img>
           for (let c = 0; c < columns; c++) {
             let tile = document.createElement("img");
@@ -141,6 +143,10 @@ var jsPuzzleGame = (function (jspsych) {
             tile.addEventListener("dragleave", dragLeave);                                          //dragging an image away from another one
             tile.addEventListener("drop", dragDrop);                                                //drop an image onto another one
             tile.addEventListener("dragend", dragEnd);                                              //after you completed dragDrop
+
+            tile_id_num_str = 'blank'+ tile_id_num.toString()
+            tile.setAttribute('id', tile_id_num_str);
+            tile_id_num = tile_id_num + 1;
 
             document.getElementById(board_id).append(tile);
           }
@@ -159,6 +165,8 @@ var jsPuzzleGame = (function (jspsych) {
           tray[j] = tmp;
         }
         tray.reverse();
+        var tile_id_let = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
+        var index = 0;
         for (let i = 0; i < tray.length; i++) {                                                         //initializing the tray with the random ordered images, add same functionality as with the board
           let tile = document.createElement("img");
           tile.src = path + tray[i] + ".jpg";
@@ -170,6 +178,9 @@ var jsPuzzleGame = (function (jspsych) {
           tile.addEventListener("dragleave", dragLeave);
           tile.addEventListener("drop", dragDrop);
           tile.addEventListener("dragend", dragEnd);
+
+          tile.setAttribute('id', tile_id_let[index]);
+          index = index + 1;
 
           document.getElementById(tray_id).append(tile);
         }

@@ -30,7 +30,7 @@
     },                                     
     extensions: [
       //{ type: jsPsychExtensionWebgazer, }, 
-      {type: jsPsychExtensionMouseTracking}
+      {type: jsPsychExtensionMouseTracking, params: {minimum_sample_time: 100}}                     //this needs to be changed before we start the acutal experiment
     ]
   });
 
@@ -138,7 +138,7 @@
     //     targets: ['#b1']
     //   }
     // }, 
-    // {type: jsPsychExtensionMouseTracking}
+    {type: jsPsychExtensionMouseTracking, params: {targets: ['.helpBtn', '#b1', '#t1', '#blank1', '#blank2', '#blank3', '#blank4', '#blank5', '#blank6', '#blank7', '#blank8', '#blank9', '#blank10', '#blank11', '#blank12', '#a', '#b', '#c', '#d', '#e', '#f', '#g', '#h', '#i', '#j', '#k', '#l']}}
     ]
 
   };
