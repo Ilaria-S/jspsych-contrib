@@ -2,23 +2,29 @@
 <html>
 
 <head>
-  <script src = "/dist/jspsych.js"></script> <!--load jsPsych and plugins-->
+  <script src = "/dist/jspsych.js"></script>                                                        <!--load jsPsych and plugins-->
   <script src = "/dist/plugin-external-html.js"></script>
   <script src = "/dist/plugin-html-keyboard-response.js"></script>
   <script src = "/dist/plugin-html-button-response.js"></script>
   <script src = "/dist/plugin-survey.js"></script>
   <script src="/dist/plugin-survey-text.js"></script>
-  <script src = "/dist/plugin-html-keyboard-response.js"></script>
-  <!-- <script src = "/dist/plugin-webgazer-init-camera.js"></script> load all webgazer related stuff
+
+  <script src = "/dist/plugin-html-keyboard-response.js"></script>                                  <!--we can delete this later, this is just to test the input participant data trial-->
+  
+  <!-- <script src = "/dist/plugin-webgazer-init-camera.js"></script>                               load all webgazer related stuff
   <script src = "/dist/plugin-webgazer-calibrate.js"></script>
   <script src = "/dist/plugin-webgazer-validate.js"></script>
   <script src = "/examples/js/webgazer/webgazer.js"></script>
   <script src = "/dist/extension-webgazer.js"></script> -->
-  <script src = "/dist/extension-mouse-tracking.js"></script> <!--load mousetracking extension-->
-  <script src = "./jsPuzzleGame.js"></script> <!--integrate the plugin-->
-  <link   rel = "stylesheet" href = "/dist/jspsychPG.css"> <!--the basic jspsych stylesheet adapted to my plugin-->
-  <link   rel = "stylesheet" href = "https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">
-  <!--the specific stylesheet for the survey plugin-->
+
+  <script src="./randomization.js"></script>                                                        <!--load the csv file; change that to participantID.js-->
+  
+  <script src = "/dist/extension-mouse-tracking.js"></script>                                       <!--load mousetracking extension-->
+  
+  <script src = "./jsPuzzleGame.js"></script>                                                       <!--integrate the plugin-->
+  
+  <link   rel = "stylesheet" href = "/dist/jspsychPG.css">                                          <!--the basic jspsych stylesheet adapted to my plugin-->
+  <link   rel = "stylesheet" href = "https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css"><!--the specific stylesheet for the survey plugin-->
 </head>
 
 <body></body>
@@ -326,9 +332,11 @@
 
 
 
-  jsPsych.run([welcome, partNumber, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
+  //jsPsych.run([welcome, partNumber, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
   //  jsPsych.run([welcome, camera_instructions, init_camera, calibration_instructions, calibration, tutorial, trial_1, trial_2, trial_3, trial_4, trial_5, trial_6, trial_7, trial_8, survey]);
 
+  //get the trials like this: randomization[1].trial, etc.
+  jsPsych.run([welcome, partNumber, tutorial, eval(randomization[0].trial), eval(randomization[1].trial), eval(randomization[2].trial), eval(randomization[3].trial), eval(randomization[4].trial), eval(randomization[5].trial), eval(randomization[6].trial), eval(randomization[7].trial), survey])
   
 </script>
 
