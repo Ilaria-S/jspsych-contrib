@@ -70,6 +70,38 @@ var jsPuzzleGame = (function (jspsych) {
       var board_id = trial.boardID;
       var start_time = performance.now();                                                           //this variable is later used to calculate the rt
 
+      var randomizePieces = '';
+      switch (board_id) {
+        case "b1":
+          randomizePieces = randomization[0];
+          break;
+        case "b2":
+          randomizePieces = randomization[1];
+          break;
+        case "b3":
+          randomizePieces = randomization[2];
+          break;
+        case "b4":
+          randomizePieces = randomization[3];
+          break;
+        case "b5":
+          randomizePieces = randomization[4];
+          break;
+        case "b6":
+          randomizePieces = randomization[5];
+          break;
+        case "b7":
+          randomizePieces = randomization[6];
+          break;
+        case "b8":
+          randomizePieces = randomization[7];
+          break;
+        default:
+          break;
+      };
+      
+    
+
       if (trial.trayPosition == 1){
         var new_html = '<br><div class = "board" id = ' + board_id + '>' + '</div><br>' +'<div class = ' + tray_class + ' id =' + tray_id + '>' + '</div><br>' + '<button class = "startExp2">Next puzzle</button>' + '<input  type = "button" value = "Need help?" class = "helpBtn">';
       }else if (trial.trayPosition == 2){
@@ -152,19 +184,13 @@ var jsPuzzleGame = (function (jspsych) {
           }
         }
 
-        let tray = [];
-        for (let i = 1; i <= rows * columns; i++) {                                                       //because I called the images "1.jpg" etc., this will create an array with numbers 1 to 12 as strings
-          tray.push(i.toString());                                                                    //put "1" to "12" into the array (puzzle images names)
-        }
-        for (let i = 0; i < tray.length; i++) {                                                          //randomize pieces order by returning a random number from 1 to 12
-          let j = Math.floor(Math.random() * tray.length);
+        let tray = Object.values(randomizePieces);                                                  //this converts the object in the randomization.js file into a list
+        tray.shift();                                                                               //this removes the trial information
 
-          //swap
-          let tmp = tray[i];
-          tray[i] = tray[j];
-          tray[j] = tmp;
-        }
-        tray.reverse();
+        //because I called the images "1.jpg" etc., this will create an array with numbers 1 to 12 as strings
+        //put "1" to "12" into the array (puzzle images names)
+        //randomize pieces order by returning a random number from 1 to 12
+        
         var tile_id_let = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
         var index = 0;
         for (let i = 0; i < tray.length; i++) {                                                         //initializing the tray with the random ordered images, add same functionality as with the board
