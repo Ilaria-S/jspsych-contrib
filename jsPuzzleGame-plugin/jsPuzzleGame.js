@@ -70,7 +70,7 @@ var jsPuzzleGame = (function (jspsych) {
       var board_id = trial.boardID;
       var start_time = performance.now();                                                           //this variable is later used to calculate the rt
 
-      var randomizePieces = '';
+      var randomizePieces = '';                                                                     //take the variable from the randomization.js file and based off whether it is the first, second, ... trial choose the respective object from the array
       switch (board_id) {
         case "b1":
           randomizePieces = randomization[0];
@@ -137,6 +137,12 @@ var jsPuzzleGame = (function (jspsych) {
             new_popup();
           },
           );
+
+        let startExp2Button = document.querySelector('.startExp2');
+        startExp2Button.disabled = true;
+        setTimeout(function() {
+          startExp2Button.disabled = false;
+        }, 60000);
       }
 
       const end_trial = () => {
