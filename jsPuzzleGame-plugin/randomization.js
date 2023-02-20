@@ -1,6 +1,6 @@
 var randomization = [                                                                               //also change this variable to randomization_partID
     {
-      "trial": "trial_2",
+      "trial": "trial_runPuppy",
       "image piece on poisition (1)": 1,                                                             //array of objects that contains randomization
       "image piece on poisition (2)": 12,                                                            //for the trials and the puzzle piece randomization for one participant
       "image piece on poisition (3)": 2,                                                           //each object is a new trial
@@ -15,7 +15,7 @@ var randomization = [                                                           
       "image piece on poisition (12)": 7
     },
     {
-      "trial": "trial_8",
+      "trial": "trial_otter",
       "image piece on poisition (1)": 1,
       "image piece on poisition (2)": 3,
       "image piece on poisition (3)": 5,
@@ -30,7 +30,7 @@ var randomization = [                                                           
       "image piece on poisition (12)": 12
     },
     {
-      "trial": "trial_3",
+      "trial": "trial_alpaca",
       "image piece on poisition (1)": 1,
       "image piece on poisition (2)": 4,
       "image piece on poisition (3)": 7,
@@ -45,7 +45,7 @@ var randomization = [                                                           
       "image piece on poisition (12)": 12
     },
     {
-      "trial": "trial_6",
+      "trial": "trial_otters",
       "image piece on poisition (1)": 1,
       "image piece on poisition (2)": 3,
       "image piece on poisition (3)": 5,
@@ -60,7 +60,7 @@ var randomization = [                                                           
       "image piece on poisition (12)": 12
     },
     {
-      "trial": "trial_5",
+      "trial": "trial_toronto",
       "image piece on poisition (1)": 12,
       "image piece on poisition (2)": 10,
       "image piece on poisition (3)": 8,
@@ -75,7 +75,7 @@ var randomization = [                                                           
       "image piece on poisition (12)": 1
     },
     {
-      "trial": "trial_7",
+      "trial": "trial_monkey",
       "image piece on poisition (1)": 5,
       "image piece on poisition (2)": 6,
       "image piece on poisition (3)": 10,
@@ -90,7 +90,7 @@ var randomization = [                                                           
       "image piece on poisition (12)": 12
     },
     {
-      "trial": "trial_4",
+      "trial": "trial_acadia",
       "image piece on poisition (1)": 12,
       "image piece on poisition (2)": 3,
       "image piece on poisition (3)": 5,
@@ -105,7 +105,7 @@ var randomization = [                                                           
       "image piece on poisition (12)": 1
     },
     {
-      "trial": "trial_1",
+      "trial": "trial_SU",
       "image piece on poisition (1)": 7,
       "image piece on poisition (2)": 3,
       "image piece on poisition (3)": 5,
