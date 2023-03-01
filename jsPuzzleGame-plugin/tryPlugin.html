@@ -17,7 +17,8 @@
   <script src = "/examples/js/webgazer/webgazer.js"></script>
   <script src = "/dist/extension-webgazer.js"></script> -->
 
-  <script src="./randomization.js"></script>                                                        <!--load the csv file; change that to participantID.js-->
+  <script src="./other/randomization.js"></script>                                                  <!--load the csv file; change that to participantID.js-->
+  <script src="./other/90.js"></script>                                                             <!--this is the csv file for participant with worker ID 90-->
   
   <script src = "/dist/extension-mouse-tracking.js"></script>                                       <!--load mousetracking extension-->
   
@@ -33,6 +34,7 @@
   var jsPsych = initJsPsych({
     on_finish: function () {
       jsPsych.data.displayData()
+      //on_finish: () => jatos.endStudy(jsPsych.data.get().json())
     },                                     
     extensions: [
       //{ type: jsPsychExtensionWebgazer, }, 
@@ -357,6 +359,7 @@
   //this evaluates the trial property of the first, second, ... object in the randomization array (if trial_8 is the trial property of the first object, this is going to be the first trial)
   jsPsych.run([welcome, partNumber, tutorial2, eval(randomization[0].trial), eval(randomization[1].trial), eval(randomization[2].trial), eval(randomization[3].trial), eval(randomization[4].trial), eval(randomization[5].trial), eval(randomization[6].trial), eval(randomization[7].trial), survey])
   
+
 </script>
 
 </html>
