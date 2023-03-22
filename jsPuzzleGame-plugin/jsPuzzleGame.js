@@ -142,7 +142,7 @@ var jsPuzzleGame = (function (jspsych) {
         startExp2Button.disabled = true;
         setTimeout(function() {
           startExp2Button.disabled = false;
-        }, 60000);
+        }, 56000);
       }
 
       const end_trial = () => {
